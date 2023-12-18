@@ -28,12 +28,10 @@ export const goMoviesScraper = makeSourcerer({
     const mediaElements = searchPage('a.nav-item');
 
     const mediaData = mediaElements.toArray().map((movieEl) => {
-      const name = searchPage(movieEl).find('h2.film-name')?.text();
+      const name = searchPage(movieEl).find('h3.film-name')?.text();
       const year = searchPage(movieEl).find('div.film-infor span:first-of-type')?.text();
       const path = searchPage(movieEl).attr('href');
-      const seasons = searchPage(movieEl).find('div.film-detail.film-detail-fix > div > span:nth-child(1)');
-      console.log(seasons);
-      return { name, year, path, seasons };
+      return { name, year, path };
     });
 
     const targetMedia = mediaData.find((m) => m.name === ctx.media.title);
