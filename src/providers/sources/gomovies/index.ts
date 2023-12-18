@@ -34,6 +34,21 @@ export const goMoviesScraper = makeSourcerer({
       return { name, year, path };
     });
 
+    const numberPattern = /\d+/;
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < mediaData.length; i++) {
+      // Use the match method to find the first match in the string
+      const matchResult: RegExpMatchArray | null = mediaData[i].year.match(numberPattern);
+      // Check if a match is found and extract the number
+      if (matchResult) {
+        const extractedNumber: number = parseInt(matchResult[0], 10);
+        console.log(extractedNumber); // Output: 9
+      } else {
+        console.log('No number found in the string');
+      }
+    }
+
     const targetMedia = mediaData.find((m) => m.name === ctx.media.title);
     if (!targetMedia?.path) throw new NotFoundError('Media not found');
 
