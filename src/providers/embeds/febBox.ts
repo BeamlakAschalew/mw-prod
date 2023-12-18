@@ -5,7 +5,7 @@ import { NotFoundError } from '@/utils/errors';
 
 const febBoxBase = `https://www.febbox.com`;
 
-const allowedQualities = ['360', '480', '720', '1080'];
+const allowedQualities = ['360', '480', '720', '1080', '4K'];
 
 export const febBoxScraper = makeEmbed({
   id: 'febbox',
