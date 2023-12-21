@@ -40,7 +40,6 @@ export const goMoviesScraper = makeSourcerer({
       const matchResult: RegExpMatchArray | null = mediaData[i].year.match(numberPattern);
       if (matchResult) {
         const extractedNumber: number = parseInt(matchResult[0], 10);
-        console.log(extractedNumber);
         mediaData[i].year = extractedNumber.toString();
       }
     }
