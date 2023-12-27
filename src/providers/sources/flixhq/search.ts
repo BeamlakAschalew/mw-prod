@@ -19,7 +19,6 @@ export async function getFlixhqId(ctx: ScrapeContext, media: MovieMedia | ShowMe
       const title = query.find('div.film-detail > h2 > a').attr('title');
       const year = query.find('div.film-detail > div.fd-infor > span:nth-child(1)').text();
       const seasons = year.includes('SS') ? year.split('SS')[1] : '0';
-      console.log(`SEASONSSS: ${seasons}`);
 
       if (!id || !title || !year) return null;
       return {
