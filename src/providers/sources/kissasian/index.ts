@@ -14,7 +14,7 @@ export const kissAsianScraper = makeSourcerer({
   name: 'KissAsian',
   rank: 130,
   flags: [flags.NO_CORS],
-  disabled: true,
+  disabled: false,
 
   async scrapeShow(ctx) {
     const seasonNumber = ctx.media.season.number;
