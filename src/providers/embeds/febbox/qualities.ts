@@ -2,7 +2,7 @@ import { sendRequest } from '@/providers/sources/showbox/sendRequest';
 import { StreamFile } from '@/providers/streams';
 import { ScrapeContext } from '@/utils/context';
 
-const allowedQualities = ['360', '480', '720', '1080', '4k'];
+const allowedQualities = ['360', '480', '720', '1080', '4K'];
 
 export async function getStreamQualities(ctx: ScrapeContext, apiQuery: object) {
   const mediaRes: { list: { path: string; quality: string; fid?: number }[] } = (await sendRequest(ctx, apiQuery)).data;
