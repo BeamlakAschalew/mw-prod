@@ -8,6 +8,7 @@ export type CaptionType = keyof typeof captionTypes;
 
 export type Caption = {
   type: CaptionType;
+  id: string; // only unique per stream
   url: string;
   hasCorsRestrictions: boolean;
   language: string;
@@ -29,4 +30,14 @@ export function labelToLanguageCode(label: string): string | null {
 export function isValidLanguageCode(code: string | null): boolean {
   if (!code) return false;
   return ISO6391.validate(code);
+}
+
+export function removeDuplicatedLanguages(list: Caption[]) {
+  const beenSeen: Record<string, true> = {};
+
+  return list.filter((sub) => {
+    if (beenSeen[sub.language]) return false;
+    beenSeen[sub.language] = true;
+    return true;
+  });
 }

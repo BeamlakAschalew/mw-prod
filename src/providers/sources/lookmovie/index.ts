@@ -1,4 +1,4 @@
-import { flags } from '@/main/targets';
+import { flags } from '@/entrypoint/utils/targets';
 import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
@@ -10,19 +10,22 @@ async function universalScraper(ctx: MovieScrapeContext | ShowScrapeContext): Pr
   if (!lookmovieData) throw new NotFoundError('Media not found');
 
   ctx.progress(30);
-  const videoUrl = await scrape(ctx, ctx.media, lookmovieData);
-  if (!videoUrl) throw new NotFoundError('No video found');
+  const video = await scrape(ctx, ctx.media, lookmovieData);
+  if (!video.playlist) throw new NotFoundError('No video found');
 
   ctx.progress(60);
 
   return {
     embeds: [],
-    stream: {
-      playlist: videoUrl,
-      type: 'hls',
-      flags: [flags.IP_LOCKED],
-      captions: [],
-    },
+    stream: [
+      {
+        id: 'primary',
+        playlist: video.playlist,
+        type: 'hls',
+        flags: [flags.IP_LOCKED],
+        captions: video.captions,
+      },
+    ],
   };
 }
 
@@ -31,7 +34,6 @@ export const lookmovieScraper = makeSourcerer({
   name: 'LookMovie',
   rank: 1,
   flags: [flags.IP_LOCKED],
-  disabled: false,
   scrapeShow: universalScraper,
   scrapeMovie: universalScraper,
 });

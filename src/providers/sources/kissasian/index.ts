@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import { flags } from '@/main/targets';
+import { flags } from '@/entrypoint/utils/targets';
 import { makeSourcerer } from '@/providers/base';
 import { NotFoundError } from '@/utils/errors';
 
@@ -13,8 +13,8 @@ export const kissAsianScraper = makeSourcerer({
   id: 'kissasian',
   name: 'KissAsian',
   rank: 130,
-  flags: [flags.NO_CORS],
-  disabled: false,
+  flags: [flags.CORS_ALLOWED],
+  disabled: true,
 
   async scrapeShow(ctx) {
     const seasonNumber = ctx.media.season.number;
