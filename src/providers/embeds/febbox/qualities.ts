@@ -2,7 +2,7 @@ import { sendRequest } from '@/providers/sources/showbox/sendRequest';
 import { StreamFile } from '@/providers/streams';
 import { ScrapeContext } from '@/utils/context';
 
-const allowedQualities = ['360', '480', '720', '1080', '4K'];
+const allowedQualities = ['360', '480', '720', '1080', '4k'];
 
 interface FebboxQuality {
   path: string;

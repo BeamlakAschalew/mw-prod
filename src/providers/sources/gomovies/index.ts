@@ -1,11 +1,10 @@
 import { load } from 'cheerio';
-
-import { flags } from '@/entrypoint/utils/targets';
 import { makeSourcerer } from '@/providers/base';
 import { upcloudScraper } from '@/providers/embeds/upcloud';
 import { NotFoundError } from '@/utils/errors';
 
 import { getSource } from './source';
+import { flags } from '@/entrypoint/utils/targets';
 
 export const gomoviesBase = `https://gomovies.sx`;
 

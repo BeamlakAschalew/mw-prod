@@ -6,7 +6,7 @@ export type StreamFile = {
   url: string;
 };
 
-export type Qualities = 'unknown' | '360' | '480' | '720' | '1080' | '4K';
+export type Qualities = 'unknown' | '360' | '480' | '720' | '1080' | '4k';
 
 type StreamCommon = {
   id: string; // only unique per output
