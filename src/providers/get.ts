@@ -8,8 +8,8 @@ export interface ProviderList {
 }
 
 export function getProviders(features: FeatureMap, list: ProviderList): ProviderList {
-  const sources = list.sources.filter((v) => !v?.disabled);
-  const embeds = list.embeds.filter((v) => !v?.disabled);
+  const sources = list.sources;
+  const embeds = list.embeds;
   const combined = [...sources, ...embeds];
 
   const anyDuplicateId = hasDuplicates(combined.map((v) => v.id));
