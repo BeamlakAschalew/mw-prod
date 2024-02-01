@@ -23,9 +23,11 @@ import { fileMoonScraper } from './embeds/filemoon';
 import { ridooScraper } from './embeds/ridoo';
 import { smashyStreamDScraper } from './embeds/smashystream/dued';
 import { smashyStreamFScraper } from './embeds/smashystream/video1';
+import { vidCloudScraper } from './embeds/vidcloud';
 import { vidplayScraper } from './embeds/vidplay';
 import { wootlyScraper } from './embeds/wootly';
 import { goojaraScraper } from './sources/goojara';
+import { nepuScraper } from './sources/nepu';
 import { ridooMoviesScraper } from './sources/ridomovies';
 import { smashyStreamScraper } from './sources/smashystream';
 import { vidSrcToScraper } from './sources/vidsrcto';
@@ -44,6 +46,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     smashyStreamScraper,
     ridooMoviesScraper,
     vidSrcToScraper,
+    nepuScraper,
     goojaraScraper,
   ];
 }
@@ -52,6 +55,7 @@ export function gatherAllEmbeds(): Array<Embed> {
   // all embeds are gathered here
   return [
     upcloudScraper,
+    vidCloudScraper,
     mp4uploadScraper,
     streamsbScraper,
     upstreamScraper,
