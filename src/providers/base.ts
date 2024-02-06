@@ -37,7 +37,7 @@ export function makeSourcerer(state: SourcererOptions): Sourcerer {
   return {
     ...state,
     type: 'source',
-    disabled: false,
+    disabled: state.disabled ?? false,
     mediaTypes,
   };
 }
@@ -64,7 +64,7 @@ export function makeEmbed(state: EmbedOptions): Embed {
   return {
     ...state,
     type: 'embed',
-    disabled: false,
+    disabled: state.disabled ?? false,
     mediaTypes: undefined,
   };
 }
