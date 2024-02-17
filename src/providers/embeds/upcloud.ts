@@ -57,6 +57,25 @@ function extractKey(script: string): [number, number][] | null {
   return nums;
 }
 
+function convertTo2DArray(data: string): number[][] {
+  // Split the string by commas and convert each part to a number
+  const numbers: number[] = data.split(',').map(Number);
+
+  // Check if the number of elements is even, if not, remove the last element
+  if (numbers.length % 2 !== 0) {
+      numbers.pop();
+  }
+
+  // Create a 2D array by grouping every two consecutive numbers
+  const result: number[][] = [];
+  for (let i = 0; i < numbers.length; i += 2) {
+      result.push([numbers[i], numbers[i + 1]]);
+  }
+  console.log("RESULT " + result);
+  
+  return result;
+}
+
 export const upcloudScraper = makeEmbed({
   id: 'upcloud',
   name: 'UpCloud',
@@ -85,7 +104,7 @@ export const upcloudScraper = makeEmbed({
         },
       });
       const k = await axios.get('https://keys4.fun');
-      const decryptionKey = k.data.rabbitstream.keys as [number, number][];
+      const decryptionKey = convertTo2DArray(k.data.rabbitstream.keys);
       if (!decryptionKey) throw new Error('Key extraction failed');
 
       let extractedKey = '';
