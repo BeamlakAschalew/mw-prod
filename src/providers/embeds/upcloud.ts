@@ -75,6 +75,15 @@ function convertTo2DArray(data: string): number[][] {
   return result;
 }
 
+const isJson = (str: string) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};
+
 export const upcloudScraper = makeEmbed({
   id: 'upcloud',
   name: 'UpCloud',
@@ -96,31 +105,12 @@ export const upcloudScraper = makeEmbed({
     let sources: { file: string; type: string } | null = null;
 
     if (!isJSON(streamRes.sources)) {
-      const scriptJs = await ctx.proxiedFetcher<string>(`https://rabbitstream.net/js/player/prod/e4-player.min.js`, {
-        query: {
-          // browser side caching on this endpoint is quite extreme. Add version query paramter to circumvent any caching
-          v: Date.now().toString(),
-        },
-      });
       const k = await axios.get('https://keys4.fun');
       const decryptionKey = convertTo2DArray(k.data.rabbitstream.keys);
       if (!decryptionKey) throw new Error('Key extraction failed');
-
-      let extractedKey = '';
-      let strippedSources = streamRes.sources;
-      let totalledOffset = 0;
-      decryptionKey.forEach(([a, b]) => {
-        const start = a + totalledOffset;
-        const end = start + b;
-        extractedKey += streamRes.sources.slice(start, end);
-        strippedSources = strippedSources.replace(streamRes.sources.substring(start, end), '');
-        totalledOffset += b;
-      });
-
-      const decryptedStream = AES.decrypt(strippedSources, extractedKey).toString(enc.Utf8);
-      const parsedStream = JSON.parse(decryptedStream)[0];
-      if (!parsedStream) throw new Error('No stream found');
-      sources = parsedStream;
+      const keyString = btoa(String.fromCharCode.apply(null, Array.from(new Uint8Array(k.data.rabbitstream.keys))));
+      const decryptedVal = CryptoJS.AES.decrypt(streamRes.sources, keyString).toString(CryptoJS.enc.Utf8);
+      sources = isJSON(decryptedVal) ? JSON.parse(streamRes.sources) : streamRes.sources;
     }
 
     if (!sources) throw new Error('upcloud source not found');
