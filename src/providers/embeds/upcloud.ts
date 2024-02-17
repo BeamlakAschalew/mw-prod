@@ -5,7 +5,6 @@ import { flags } from '@/entrypoint/utils/targets';
 import { makeEmbed } from '@/providers/base';
 import { Caption, getCaptionTypeFromUrl, labelToLanguageCode } from '@/providers/captions';
 
-
 const origin = 'https://rabbitstream.net';
 const referer = 'https://rabbitstream.net/';
 
@@ -85,7 +84,6 @@ export const upcloudScraper = makeEmbed({
           v: Date.now().toString(),
         },
       });
-      
       const k = await axios.get('https://keys4.fun');
       const decryptionKey = k.data.rabbitstream.keys as [number, number][];
       if (!decryptionKey) throw new Error('Key extraction failed');
