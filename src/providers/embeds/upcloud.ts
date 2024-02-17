@@ -3,6 +3,7 @@ import crypto from 'crypto-js';
 import { flags } from '@/entrypoint/utils/targets';
 import { makeEmbed } from '@/providers/base';
 import { Caption, getCaptionTypeFromUrl, labelToLanguageCode } from '@/providers/captions';
+import axios from 'axios';
 
 const origin = 'https://rabbitstream.net';
 const referer = 'https://rabbitstream.net/';
@@ -83,7 +84,9 @@ export const upcloudScraper = makeEmbed({
           v: Date.now().toString(),
         },
       });
-      const decryptionKey = extractKey(scriptJs);
+      
+      const k = await axios.get('https://keys4.fun');
+      const decryptionKey = k.data.rabbitstream.keys as [number, number][];
       if (!decryptionKey) throw new Error('Key extraction failed');
 
       let extractedKey = '';
