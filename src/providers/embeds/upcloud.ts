@@ -1,9 +1,10 @@
+import axios from 'axios';
 import crypto from 'crypto-js';
 
 import { flags } from '@/entrypoint/utils/targets';
 import { makeEmbed } from '@/providers/base';
 import { Caption, getCaptionTypeFromUrl, labelToLanguageCode } from '@/providers/captions';
-import axios from 'axios';
+
 
 const origin = 'https://rabbitstream.net';
 const referer = 'https://rabbitstream.net/';
