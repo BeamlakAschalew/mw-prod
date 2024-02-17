@@ -63,16 +63,15 @@ function convertTo2DArray(data: string): number[][] {
 
   // Check if the number of elements is even, if not, remove the last element
   if (numbers.length % 2 !== 0) {
-      numbers.pop();
+    numbers.pop();
   }
 
   // Create a 2D array by grouping every two consecutive numbers
   const result: number[][] = [];
   for (let i = 0; i < numbers.length; i += 2) {
-      result.push([numbers[i], numbers[i + 1]]);
+    result.push([numbers[i], numbers[i + 1]]);
   }
-  console.log("RESULT " + result);
-  
+  console.log(`RESULT ${result}`);
   return result;
 }
 
