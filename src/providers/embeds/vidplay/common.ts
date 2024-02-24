@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { makeFullUrl } from '@/fetchers/common';
 import { decodeData } from '@/providers/sources/vidsrcto/common';
 import { EmbedScrapeContext } from '@/utils/context';
@@ -8,19 +10,16 @@ export const referer = `${vidplayBase}/`;
 // This file is based on https://github.com/Ciarands/vidsrc-to-resolver/blob/dffa45e726a4b944cb9af0c9e7630476c93c0213/vidsrc.py#L16
 // Full credits to @Ciarands!
 
-export const getDecryptionKeys = async (ctx: EmbedScrapeContext): Promise<string[]> => {
-  const res = await ctx.proxiedFetcher<string>('https://github.com/Ciarands/vidsrc-keys/blob/main/keys.json');
-  const regex = /"rawLines":\s*\[([\s\S]*?)\]/;
-  const rawLines = res.match(regex)?.[1];
-  if (!rawLines) throw new Error('No keys found');
-  const keys = JSON.parse(`${rawLines.substring(1).replace(/\\"/g, '"')}]`);
-  return keys;
+export const getDecryptionKeys = async (): Promise<string[]> => {
+  const res = (await axios.get('https://keys4.fun')).data.vidsrc_to.keys;
+  if (!res) throw new Error('No keys found');
+  return res;
 };
 
 export const getEncodedId = async (ctx: EmbedScrapeContext) => {
   const url = new URL(ctx.url);
   const id = url.pathname.replace('/e/', '');
-  const keyList = await getDecryptionKeys(ctx);
+  const keyList = await getDecryptionKeys();
 
   const decodedId = decodeData(keyList[0], id);
   const encodedResult = decodeData(keyList[1], decodedId);
