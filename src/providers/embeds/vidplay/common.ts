@@ -11,7 +11,7 @@ export const referer = `${vidplayBase}/`;
 // Full credits to @Ciarands!
 
 export const getDecryptionKeys = async (): Promise<string[]> => {
-  const res = (await axios.get('https://keys4.fun')).data.vidsrc_to.keys;
+  const res = (await axios.get('https://keys4.fun')).data.vidplay.keys;
   if (!res) throw new Error('No keys found');
   return res;
 };
