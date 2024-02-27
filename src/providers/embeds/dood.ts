@@ -9,7 +9,7 @@ export const doodScraper = makeEmbed({
   name: 'dood',
   rank: 173,
   async scrape(ctx) {
-    const baseUrl = 'https://d0000d.com';
+    const baseUrl = 'https://do0od.com';
 
     const id = ctx.url.split('/d/')[1] || ctx.url.split('/e/')[1];
 
@@ -18,17 +18,18 @@ export const doodScraper = makeEmbed({
       baseUrl,
     });
 
-    const dataForLater = doodData.match(/\?token=([^&]+)&expiry=/)?.[1];
+    const dataForLater = doodData.match(/a\+"\?token=([^"]+)/)?.[1];
     const path = doodData.match(/\$\.get\('\/pass_md5([^']+)/)?.[1];
 
-    const doodPage = await ctx.proxiedFetcher<string>(`/pass_md5${path}`, {
+    const doodPage = await ctx.proxiedFetcher<string>(`/pass_md5/${path}`, {
       headers: {
-        Referer: `${baseUrl}/e/${id}`,
+        referer: `${baseUrl}/e/${id}`,
       },
       method: 'GET',
       baseUrl,
     });
-    const downloadURL = `${doodPage}${nanoid()}?token=${dataForLater}&expiry=${Date.now()}`;
+
+    const downloadURL = `${doodPage}${nanoid()}?token=${dataForLater}${Date.now()}`;
 
     return {
       stream: [
@@ -42,7 +43,7 @@ export const doodScraper = makeEmbed({
               type: 'mp4',
               url: downloadURL,
               headers: {
-                Referer: 'https://d0000d.com/',
+                referer: 'https://do0od.com/',
               },
             },
           },
