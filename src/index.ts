@@ -1,5 +1,3 @@
-import { getDecryptionKeys } from './providers/embeds/vidplay/common';
-
 export type { EmbedOutput, SourcererOutput } from '@/providers/base';
 export type { Stream, StreamFile, FileBasedStream, HlsBasedStream, Qualities } from '@/providers/streams';
 export type { Fetcher, DefaultedFetcherOptions, FetcherOptions, FetcherResponse } from '@/fetchers/types';
