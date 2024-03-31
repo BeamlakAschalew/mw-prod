@@ -18,6 +18,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'import', 'prettier'],
   rules: {
+    'class-methods-use-this': 'off',
     'no-plusplus': 'off',
     'no-bitwise': 'off',
     'no-underscore-dangle': 'off',
