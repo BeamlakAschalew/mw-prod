@@ -12,8 +12,9 @@ export const gomoviesBase = `https://gomovies.sx`;
 export const goMoviesScraper = makeSourcerer({
   id: 'gomovies',
   name: 'GOmovies',
-  rank: 110,
+  rank: 60,
   flags: [flags.CORS_ALLOWED],
+  disabled: true,
   async scrapeShow(ctx) {
     const search = await ctx.proxiedFetcher<string>(`/ajax/search`, {
       method: 'POST',
@@ -34,19 +35,7 @@ export const goMoviesScraper = makeSourcerer({
       return { name, year, path };
     });
 
-    const numberPattern = /\d+/;
-
-    for (let i = 0; i < mediaData.length; i += 1) {
-      const matchResult: RegExpMatchArray | null = mediaData[i].year.match(numberPattern);
-      if (matchResult) {
-        const extractedNumber: number = parseInt(matchResult[0], 10);
-        mediaData[i].year = extractedNumber.toString();
-      }
-    }
-
-    const targetMedia = mediaData.find(
-      (m) => m.name === ctx.media.title && m.year === ctx.media.numberOfSeasons.toString(),
-    );
+    const targetMedia = mediaData.find((m) => m.name === ctx.media.title);
     if (!targetMedia?.path) throw new NotFoundError('Media not found');
 
     // Example movie path: /movie/watch-{slug}-{id}
