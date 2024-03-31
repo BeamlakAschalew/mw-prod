@@ -157,10 +157,10 @@ class Blowfish {
 
   num2block32(e: number) {
     return (
-      String.fromCharCode(this.fixNegative(e >>> 24)) +
-      String.fromCharCode(this.fixNegative((e << 8) >>> 24)) +
-      String.fromCharCode(this.fixNegative((e << 16) >>> 24)) +
-      String.fromCharCode(this.fixNegative((e << 24) >>> 24))
+      String.fromCharCode(e >>> 24) +
+      String.fromCharCode((e << 8) >>> 24) +
+      String.fromCharCode((e << 16) >>> 24) +
+      String.fromCharCode((e << 24) >>> 24)
     );
   }
 
@@ -183,7 +183,6 @@ class Blowfish {
   }
 
   utf8Decode(input: string) {
-    // Ensure 'this' is used appropriately within the method
     let decoded = '';
     for (let i = 0; i < input.length; i++) {
       const charCode = input.charCodeAt(i);
